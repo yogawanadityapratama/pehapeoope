@@ -105,7 +105,8 @@ nav {
     margin-top: 32px;
 } .card-content {
     width: 300px;
-    height: 300px;
+    height: fit-content;
+    margin-bottom: 32px;
 }
 
 .left-right {
