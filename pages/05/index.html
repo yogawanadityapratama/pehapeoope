@@ -5,7 +5,106 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" type="image/x-icon" href="https://raw.githubusercontent.com/yogawanadityapratama/stockclash/main/src/image/favicon.png">
     <link rel="stylesheet" href="/src/styles.css">
-    <title>KELOMPOK-H</title>
+    <title>Create, Read, Update and Delete</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+        body {
+            font-family: 'Inter', sans-serif;
+        } form {
+            border: 1px solid rgba(0, 0, 0, 0.25);
+            padding: 12px;
+            border-radius: 24px;
+            margin-left: 12px;
+            margin-bottom: 12px;
+            background-color: whitesmoke;
+        } ul {
+            list-style: none;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: left;
+            margin: 0;
+            padding: 0;
+        } div {
+            width: 340px;
+            height: fit-content;
+            background-color: whitesmoke;
+            border: 1px solid rgba(0, 0, 0, 0.25);
+            padding: 12px;
+            border-radius: 24px;
+            margin-right: 12px;
+            margin-bottom: 12px;
+        } input {
+            margin-top: 6px;
+            padding: 12px;
+            border: 1px solid rgba(0, 0, 0, 0.25);
+            border-radius: 100px;
+            text-decoration: none;
+            color: black;
+        } button {
+            padding: 12px;
+            border: 1px solid rgba(0, 0, 0, 0.25);
+            border-radius: 100px;
+            text-decoration: none;
+            color: black;
+        }
+        @media (max-width: 480px) {
+            body {
+                margin-left: 16px;
+                padding-top: 16px;
+            }
+        }
+
+        @media (min-width: 481px) and (max-width: 767px) {
+            body {
+                margin-left: 16px;
+                padding-top: 16px;
+            }
+        }
+
+        @media (min-width: 768px) and (max-width: 991px) {
+            body {
+                margin-left: 300px;
+                padding-top: 72px;
+            } form {
+                position: fixed;
+                top: 200px;
+                left: 64px;
+            }
+        }
+
+        @media (min-width: 992px) and (max-width: 1199px) {
+            body {
+                margin-left: 400px;
+                padding-top: 72px;
+            } form {
+                position: fixed;
+                top: 200px;
+                left: 64px;
+            }
+        }
+
+        @media (min-width: 1200px) and (max-width: 1919px) {
+            body {
+                margin-left: 400px;
+                padding-top: 72px;
+            } form {
+                position: fixed;
+                top: 200px;
+                left: 64px;
+            }
+        }
+
+        @media (min-width: 1920px) {
+            body {
+                margin-left: 400px;
+                padding-top: 72px;
+            } form {
+                position: fixed;
+                top: 200px;
+                left: 64px;
+            }
+        }
+    </style>
 </head>
 <body>
     <nav class="nav">
@@ -23,27 +122,93 @@
                 <a href="/pages/03/index.html">4 Pilar OOP</a>
             </li>
             <li>
-                <a href="/pages/04/index.html">Contoh webiste yang di develop menggunakan php OOP</a>
+                <a href="/pages/04/index.html">Contoh webiste</a>
             </li>
             <li>
-                <a href="https://cerudoope.vercel.app">Bagaimana implementasi OOP pada bahasa pemrograman PHP?</a>
+                <a class="active" href="/pages/05/index.html">Aplikasi</a>
             </li>
             <li>
-                <a class="active" href="/pages/05/index.html">Terima kasih, ada pertanyaan?</a>
+                <a href="/pages/06/index.html">Terima kasih</a>
             </li>
         </ul>
     </nav>
-    <p style="text-align: center; margin-top: 64px; margin-bottom: 64px;">php OOP</p>
-    <div class="title-2" style="margin-top: 190px;">
-        <span class="s128">Terima Kasih</span>
-        <hr>
-    </div>
-    <div class="title-2">
-        <span class="s32">Jika kalian bingung mau bertanya, kami juga bingung mau jawab apa.</span>
-    </div>
-    <div>
-        <br><br><br><br><br><br><br><br><br><br>
-    </div>
-    <script src="/src/script.js"></script>
+    <form id="crud-form">
+        <h1>Tambah Produk</h1>
+        <label for="name">Name:</label>
+        <input type="text" id="name" required>
+        <br><br>
+        <label for="price">Price:</label>
+        <input type="number" id="price" required>
+        <br><br>
+        <button style="background-color: blue; color: white;" type="button" onclick="create()">Create</button>
+    </form>
+    <h1>CRUD dengan PHP OOP</h1>
+    <ul id="data-list"></ul>
+    <script>
+        function getDataFromLocalStorage() {
+            const storedData = localStorage.getItem('crudData');
+            return storedData ? JSON.parse(storedData) : [];
+        }
+
+        function saveDataToLocalStorage() {
+            localStorage.setItem('crudData', JSON.stringify(data));
+        }
+
+        let data = getDataFromLocalStorage();
+
+        function create() {
+            const name = document.getElementById('name').value;
+            const price = document.getElementById('price').value;
+
+            const entry = {
+                id: new Date().getTime(),
+                name: name,
+                price: price
+            };
+
+            data.push(entry);
+            saveDataToLocalStorage(); // Simpan data ke localStorage
+            displayData();
+            clearForm();
+        }
+
+        function displayData() {
+            const dataList = document.getElementById('data-list');
+            dataList.innerHTML = '';
+
+            data.forEach(entry => {
+                const listItem = document.createElement('li');
+                listItem.innerHTML = `<div><h1>${entry.name}</h1>Price: ${entry.price} <br><br> <button style="background-color: blue; color: white;" onclick="update(${entry.id})">Update</button> <button style="background-color: red; color: white;" onclick="remove(${entry.id})">Delete</button></div>`;
+                dataList.appendChild(listItem);
+            });
+        }
+
+        function update(id) {
+            const entry = data.find(item => item.id === id);
+            if (entry) {
+                const newName = prompt('Enter new name:', entry.name);
+                const newPrice = prompt('Enter new price:', entry.price);
+
+                entry.name = newName;
+                entry.price = newPrice;
+
+                saveDataToLocalStorage(); // Simpan data ke localStorage
+                displayData();
+            }
+        }
+
+        function remove(id) {
+            data = data.filter(item => item.id !== id);
+            saveDataToLocalStorage(); // Simpan data ke localStorage
+            displayData();
+        }
+
+        function clearForm() {
+            document.getElementById('name').value = '';
+            document.getElementById('price').value = '';
+        }
+
+        displayData();
+    </script>
 </body>
 </html>
