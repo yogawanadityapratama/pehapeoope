@@ -25,7 +25,7 @@
             justify-content: left;
             margin: 0;
             padding: 0;
-        } div {
+        } section {
             width: 340px;
             height: fit-content;
             background-color: whitesmoke;
@@ -178,7 +178,7 @@
             dataList.innerHTML = '';
 
             data.forEach(entry => {
-                const listItem = document.createElement('li');
+                const listItem = document.createElement('section');
                 listItem.innerHTML = `<div><h1>${entry.name}</h1>Price: ${entry.price} <br><br> <button style="background-color: blue; color: white;" onclick="update(${entry.id})">Update</button> <button style="background-color: red; color: white;" onclick="remove(${entry.id})">Delete</button></div>`;
                 dataList.appendChild(listItem);
             });
